@@ -1,6 +1,7 @@
 """Query processing for HR Helpdesk RAG."""
 
 import os
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -16,6 +17,7 @@ from .config import (
     LLM_MODEL,
     LLM_TEMPERATURE,
     get_embedding_model,
+    get_system_prompt,
 )
 
 
@@ -62,9 +64,39 @@ def extract_sources(docs) -> list[dict]:
     return sources
 
 
+def is_small_talk(text: str) -> bool:
+    """Return True for greetings and brief conversational messages."""
+    normalized = re.sub(r"[^a-zA-Z\s]", "", text).strip().lower()
+    if not normalized:
+        return False
+
+    small_talk_phrases = {
+        "hi",
+        "hello",
+        "hey",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "how are you",
+        "thanks",
+        "thank you",
+    }
+    return normalized in small_talk_phrases
+
+
 def query_rag(query: str, persist_directory: Optional[str] = None) -> dict:
     """Process a query using RAG."""
     load_environment()
+
+    if is_small_talk(query):
+        return {
+            "answer": (
+                "Hi! I can help with HR policy questions like leave, attendance, "
+                "benefits, workplace conduct, and other company policy topics. "
+                "Please ask your question, and I will answer from the available HR documents."
+            ),
+            "sources": [],
+        }
     
     groq_key = os.getenv("GROQ_API_KEY")
     if not groq_key:
@@ -109,7 +141,7 @@ If the information is not available, say:
     )
     
     messages = [
-        SystemMessage(content="You are an HR helpdesk assistant."),
+        SystemMessage(content=get_system_prompt()),
         HumanMessage(content=combined_input),
     ]
     
