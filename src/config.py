@@ -22,6 +22,7 @@ RETRIEVAL_K = 8
 # LLM settings
 LLM_MODEL = "llama-3.1-8b-instant"
 LLM_TEMPERATURE = 0
+#
 
 # Assistant behavior
 DEFAULT_SYSTEM_PROMPT = (
