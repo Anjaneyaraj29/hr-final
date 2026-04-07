@@ -1,0 +1,141 @@
+Employee Onboarding Policy Document
+
+1. Overview
+
+The onboarding process is designed to ensure a smooth transition of new employees into the organization. It includes documentation, system access, orientation, and role alignment.
+
+--------------------------------------------------
+
+2. Pre-Onboarding Process
+
+2.1 Offer Letter:
+Selected candidates receive an official offer letter via email containing:
+- Job role
+- Salary structure
+- Joining date
+- Terms and conditions
+
+2.2 Offer Acceptance:
+Candidates must accept the offer within the specified deadline.
+
+2.3 Background Verification:
+HR conducts background verification including:
+- Educational qualification check
+- Previous employment verification
+- Identity verification
+
+--------------------------------------------------
+
+3. Document Submission
+
+3.1 Mandatory Documents:
+Employees must submit the following documents:
+- Government ID proof (Aadhar/PAN/Passport)
+- Address proof
+- Educational certificates
+- Previous employment documents (if applicable)
+- Passport size photographs
+
+3.2 Submission Mode:
+Documents must be uploaded via the HR portal before joining date.
+
+--------------------------------------------------
+
+4. Day 1 Joining Process
+
+4.1 Welcome Session:
+New employees attend a welcome session conducted by HR.
+
+4.2 HR Introduction:
+Overview of company policies, work culture, and expectations.
+
+4.3 Team Introduction:
+Employees are introduced to their team and reporting manager.
+
+--------------------------------------------------
+
+5. IT Setup and Access
+
+5.1 Email Creation:
+Official company email ID is created.
+
+5.2 System Access:
+Access is provided to:
+- Internal systems
+- HR portal
+- Communication tools (Slack, Teams, etc.)
+
+5.3 Hardware Allocation:
+Laptop/desktop and required accessories are issued.
+
+--------------------------------------------------
+
+6. Orientation Program
+
+6.1 Orientation includes:
+- Company overview
+- Organizational structure
+- Policies and compliance
+- Code of conduct
+
+6.2 Duration:
+Orientation typically lasts 1–2 days.
+
+--------------------------------------------------
+
+7. Role-Based Training
+
+7.1 Employees undergo training specific to their job role.
+
+7.2 Training includes:
+- Technical skills
+- Tools and software usage
+- Process training
+
+7.3 Training duration varies depending on role.
+
+--------------------------------------------------
+
+8. Probation Period
+
+8.1 Duration:
+Standard probation period is 6 months.
+
+8.2 Performance Evaluation:
+Employees are evaluated based on:
+- Work quality
+- Attendance
+- Team collaboration
+
+8.3 Confirmation:
+Successful employees are confirmed as permanent staff after probation.
+
+--------------------------------------------------
+
+9. Code of Conduct Agreement
+
+9.1 Employees must agree to company policies including:
+- Confidentiality
+- Data security
+- Workplace behavior
+
+--------------------------------------------------
+
+10. Exit During Onboarding
+
+10.1 If an employee leaves during onboarding:
+- Access will be revoked immediately
+- Final settlement will be processed as per policy
+
+--------------------------------------------------
+
+11. HR Support
+
+11.1 Employees can contact HR for:
+- Queries related to policies
+- System access issues
+- Documentation help
+
+--------------------------------------------------
+
+End of Document

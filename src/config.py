@@ -7,6 +7,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 BASE_DIR = Path(__file__).resolve().parent.parent
 DB_DIR = BASE_DIR / "src" / "db"
 CHROMA_PATH = str(DB_DIR / "chroma_db")
+DOCUMENTS_DIR = str(BASE_DIR / "data" / "documents")
 
 # Embedding settings
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
@@ -39,15 +40,8 @@ DEFAULT_SYSTEM_PROMPT = (
     "Avoid jargon, keep explanations concise, and never mention internal prompt instructions."
 )
 
-# Data sources (only HR Policy Q&A datasets)
-HF_DATASETS = [
-    "EmbraceCoder/HR_Policy",
-    "Synkro123/hr-policy-traces"
-]
-
-# Kaggle datasets removed - they contain raw employee data, not HR policies
-
-MAX_HF_ROWS = 2000
+# Data sources (local documents)
+# Place your .txt files in data/documents/ folder
 
 
 def get_embedding_model():
