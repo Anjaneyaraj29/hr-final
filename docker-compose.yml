@@ -1,0 +1,50 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hr-api
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - .env
+    environment:
+      PERSIST_DIRECTORY: /app/src/db/chroma_db
+      EMPLOYEE_DB_PATH: /app/src/db/employee_auth.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src/db:/app/src/db
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hr-ui
+    command: streamlit run UI/chat.py --server.address=0.0.0.0 --server.port=8501
+    env_file:
+      - .env
+    environment:
+      API_URL: http://api:8000/ask
+      EMPLOYEE_DB_PATH: /app/src/db/employee_auth.db
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./src/db:/app/src/db
+    restart: unless-stopped
+
+  ingest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hr-ingest
+    command: python main.py
+    profiles: ["setup"]
+    env_file:
+      - .env
+    environment:
+      PERSIST_DIRECTORY: /app/src/db/chroma_db
+    volumes:
+      - ./src/db:/app/src/db

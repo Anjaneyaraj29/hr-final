@@ -4,9 +4,8 @@ uvicorn
 streamlit
 requests
 python-dotenv
+bcrypt
 pandas
-datasets
-kagglehub
 langchain-core
 langchain-chroma
 langchain-huggingface

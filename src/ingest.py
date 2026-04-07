@@ -1,52 +1,74 @@
 """Data ingestion and indexing for HR Helpdesk RAG."""
 
-from datasets import load_dataset
+from pathlib import Path
 from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from .config import (
-    CHROMA_PATH,
-    CHUNK_SIZE,
-    CHUNK_OVERLAP,
-    HF_DATASETS,
-    MAX_HF_ROWS,
-    get_embedding_model,
-    ensure_db_dir,
-)
+try:
+    from .config import (
+        CHROMA_PATH,
+        CHUNK_SIZE,
+        CHUNK_OVERLAP,
+        DOCUMENTS_DIR,
+        get_embedding_model,
+        ensure_db_dir,
+    )
+except ImportError:
+    from config import (
+        CHROMA_PATH,
+        CHUNK_SIZE,
+        CHUNK_OVERLAP,
+        DOCUMENTS_DIR,
+        get_embedding_model,
+        ensure_db_dir,
+    )
 
 
-def load_hf_dataset(dataset_name: str, max_rows: int = MAX_HF_ROWS) -> list[Document]:
-    """Load a HuggingFace dataset."""
-    print(f"Loading HuggingFace dataset: {dataset_name}")
+def load_local_documents(documents_dir: str = DOCUMENTS_DIR) -> list[Document]:
+    """Load all .txt files from a local directory."""
+    print(f"Loading local documents from: {documents_dir}")
     
-    ds = load_dataset(dataset_name)
+    doc_path = Path(documents_dir)
+    if not doc_path.exists():
+        print(f"WARNING: Documents directory not found: {documents_dir}")
+        return []
+    
     documents = []
+    txt_files = sorted(doc_path.glob("**/*.txt"))
     
-    for row in ds["train"]:
-        text = " ".join([str(v) for v in row.values()])
-        documents.append(Document(page_content=text, metadata={"source": dataset_name}))
-        if len(documents) >= max_rows:
-            break
+    if not txt_files:
+        print(f"No .txt files found in {documents_dir}")
+        return []
     
-    print(f"{dataset_name} -> {len(documents)} records")
+    for txt_file in txt_files:
+        try:
+            with open(txt_file, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            
+            if content:
+                documents.append(
+                    Document(
+                        page_content=content,
+                        metadata={
+                            "source": txt_file.name,
+                            "path": str(txt_file.relative_to(doc_path)),
+                        },
+                    )
+                )
+        except Exception as e:
+            print(f"Error reading {txt_file.name}: {e}")
+    
+    print(f"Loaded {len(documents)} documents from local files")
     return documents
 
 
-def load_all_datasets() -> list[Document]:
-    """Load all HR datasets from HuggingFace."""
-    print("Loading all HR datasets...")
+def load_all_documents() -> list[Document]:
+    """Load all HR documents from local .txt files."""
+    print("Loading all HR documents...")
     
-    documents = []
-    
-    # HuggingFace datasets
-    for dataset in HF_DATASETS:
-        try:
-            docs = load_hf_dataset(dataset)
-            documents.extend(docs)
-        except Exception as e:
-            print(f"Skipping {dataset}: {e}")
+    documents = load_local_documents()
     
     print(f"Total documents loaded: {len(documents)}")
     return documents
@@ -93,7 +115,7 @@ def create_vector_store(chunks: list[Document], persist_directory: str = None) -
 
 def ingest() -> None:
     """Main ingestion pipeline."""
-    documents = load_all_datasets()
+    documents = load_all_documents()
     chunks = split_documents(documents)
     create_vector_store(chunks)
     print("Ingestion complete!")
